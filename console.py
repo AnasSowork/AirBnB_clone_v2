@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+import re
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -118,10 +119,31 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+
+        # Split arguments into class name and parameters
+        args_list = args.split()
+        class_name = args_list[0]
+        params = args_list[1:]
+
+        if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+
+        # Extract parameters
+        parsed_params = {}
+        for param in params:
+            match = re.match(r'(\w+)="(.*)"', param)
+            if match:
+                key = match.group(1)
+                value = match.group(2).replace('_', ' ').replace('\\"', '"')
+                parsed_params[key] = value
+            elif re.match(r'\d+\.\d+', param):
+                parsed_params[key] = float(param)
+            elif param.isdigit():
+                parsed_params[key] = int(param)
+
+        # Create an instance of the specified class with the parsed parameters
+        new_instance = HBNBCommand.classes[class_name](**parsed_params)
         storage.save()
         print(new_instance.id)
         storage.save()
