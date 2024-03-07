@@ -80,7 +80,7 @@ Usage: create <class_name>
 3aa5babc-efb6-4041-bfe9-3cc9727588f8
 (hbnb)                   
 ```
-###### Example 1: Show an object
+###### Example 1: show an object
 Usage: show <class_name> <_id>
 
 ```
