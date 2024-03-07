@@ -22,7 +22,7 @@ sudo chown -R ubuntu:ubuntu /data/
 nginx_config="/etc/nginx/sites-available/default"
 nginx_alias="location /hbnb_static/ { alias /data/web_static/current/; }"
 if ! grep -qF "$nginx_alias" "$nginx_config"; then
-    sudo sed -i "/^\s*server\s*{/,/^\s*}/ { /^\s*}/ i \\\t$nginx_alias\n}" "$nginx_config"
+    sudo sed -i "/^\s*server\s*{/,/^\s*}/ s|^\s*}|$nginx_alias\n}|" "$nginx_config"
 fi
 
 # Restart Nginx
