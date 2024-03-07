@@ -5,7 +5,7 @@ Fabric script to distribute an archive to web servers
 from fabric.api import env, put, run
 from os.path import exists
 
-env.hosts = ['52.201.211.42', '54.89.194.2']  # Replace with actual IP addresses
+env.hosts = ['52.201.211.42', '54.89.194.2']
 
 
 def do_deploy(archive_path):
@@ -33,8 +33,8 @@ def do_deploy(archive_path):
         run('rm /tmp/{}.tgz'.format(file_name))
 
         # Move the uncompressed files to proper location
-        run('mv /data/web_static/releases/{}/web_static/* \
-            /data/web_static/releases/{}/'.format(file_name, file_name))
+        run('mv /data/web_static/releases/{}/web_static/* '
+            '/data/web_static/releases/{}/'.format(file_name, file_name))
 
         # Remove the empty web_static directory
         run('rm -rf /data/web_static/releases/{}/web_static'
